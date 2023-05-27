@@ -18,7 +18,9 @@ h2{
     padding: 10px;
     margin: auto;
 }
-
+.chars{
+    font-size: 23px;
+}
 .input{
     width: 30%;
     font-size: 20px;
@@ -36,4 +38,25 @@ h2{
     background: teal;
     color: white;
     border-radius: 5px;
+}
+.resultSection{
+    width: 50%;
+
+    margin: auto;
+    margin-top: 20px;
+    display: flex;
+}
+.resultSection div{
+    width: 40%;
+    margin: auto;
+   
+}
+.ptag{
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+}
+p{
+    font-size:20px;
+    color: teal;
 }
