@@ -1,13 +1,114 @@
-import React from 'react'
+import React, { useEffect, useState,useRef } from "react";
+const sec=10
+const word =["a","c","def","ghi"]
 
 const TypingTest = () => {
+  const [count, setCount] = useState(sec);
+  const [curInput, setCurInput] = useState([]);
+  const [curWord,setCurWord]=useState(0)
+  const [correct,setCorrect]=useState(0)
+  const [inCorrect,setInCorrect]=useState(0)
+  const [status,setStatus]=useState("wait")
+  const textInp=useRef(null)
+
+  
+  useEffect(() => {
+    if (status === 'started') {
+      textInp.current.focus()
+    }
+  }, [status])
+
+  const countStart = () => {
+    if(status!== "started"){
+      setStatus("started")
+      let interval = setInterval(() => {
+        setCount((prev) => {
+          if (prev === 0) {
+            clearInterval(interval)
+            setStatus('finished')
+            return sec
+          } else {
+            return prev - 1;
+          }
+        });
+      }, 1000);
+      
+    }
+   
+  };
+  const handleKeys = ({keyCode}) => {
+    if(keyCode===32){
+      checkMatch()
+      setCurWord(curWord+1)
+      
+    }
+  };
+  const  checkMatch=()=>{
+    const wordCompare=word[curWord]
+    const match=wordCompare===curInput.trim()
+    console.log(match)
+    if(match){
+      setCorrect(correct+1)
+    }else{
+      setInCorrect(inCorrect+1)
+    }
+
+  }
+
   return (
     <>
-    <div>
-        <h2>Count</h2>
-    </div>
-    </>
-  )
-}
+      <div className="section">
+          <h2>Time : {count}</h2>
+      </div>
 
-export default TypingTest
+      {status==="started" &&(
+        <div className="section">
+        <div className="card">
+          <div className="contain">
+            {word.map((el, i) => (
+              <span key={i}>
+                <span>
+                  {el.split("").map((char, idx) => (
+                    <span>{char}</span>
+                  ))}
+                </span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+      )}
+      <div className="section">
+        <input
+        disabled={status !="started"}
+        ref={textInp}
+          type="text"
+          className="input"
+          onKeyDown={handleKeys}
+          vaue={curInput}
+          onChange={(e) => setCurInput(e.target.value)}
+        />
+      </div>
+      <div className="section">
+        <button onClick={countStart}>start</button>
+      </div>
+      
+      
+    {status === "finished" && (
+        <div className="section">
+        <div>
+        <p>words per minute</p>
+        <p>{correct}</p>
+        </div>
+        <div>
+        <p>Accuracy</p>
+        <p>{Math.round((correct/(correct+inCorrect))*100)}%</p>
+        </div>
+       
+      </div>
+    )}
+    </>
+  );
+};
+
+export default TypingTest;
