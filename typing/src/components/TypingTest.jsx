@@ -105,7 +105,7 @@ const TypingTest = () => {
       )}
       <div className={styles.inputSection}>
         <input
-          placeholder="typing here...."
+          placeholder="type here...."
           disabled={status != "started"}
           ref={textInp}
           type="text"
