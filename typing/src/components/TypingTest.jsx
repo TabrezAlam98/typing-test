@@ -1,4 +1,5 @@
 import React, { useEffect, useState,useRef } from "react";
+import styles from './TypingTest.module.css'
 const sec=10
 const word =["a","c","def","ghi"]
 
@@ -56,15 +57,15 @@ const TypingTest = () => {
   }
 
   return (
-    <>
-      <div className="section">
+    <div className={styles.container}>
+      <div>
           <h2>Time : {count}</h2>
       </div>
 
       {status==="started" &&(
-        <div className="section">
-        <div className="card">
-          <div className="contain">
+        <div className={styles.section}>
+        <div className={styles.card}>
+          <div>
             {word.map((el, i) => (
               <span key={i}>
                 <span>
@@ -78,24 +79,25 @@ const TypingTest = () => {
         </div>
       </div>
       )}
-      <div className="section">
+      <div className={styles.inputSection}>
         <input
+        placeholder="typing here...."
         disabled={status !="started"}
         ref={textInp}
           type="text"
-          className="input"
+          className={styles.input}
           onKeyDown={handleKeys}
           vaue={curInput}
           onChange={(e) => setCurInput(e.target.value)}
         />
       </div>
-      <div className="section">
-        <button onClick={countStart}>start</button>
+      <div >
+        <button className={styles.btn} onClick={countStart}>start</button>
       </div>
       
       
     {status === "finished" && (
-        <div className="section">
+        <div>
         <div>
         <p>words per minute</p>
         <p>{correct}</p>
@@ -107,7 +109,7 @@ const TypingTest = () => {
        
       </div>
     )}
-    </>
+    </div>
   );
 };
 
